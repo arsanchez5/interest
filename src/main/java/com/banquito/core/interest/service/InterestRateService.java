@@ -16,7 +16,7 @@ public class InterestRateService {
         this.interestRateRepository = interestRateRepository;
     }
 
-    public InterestRate obtainInterestById(String code) {
+    public InterestRate getInterestById(String code) {
         Optional<InterestRate> interestOpt = this.interestRateRepository.findById(code);
         if (interestOpt.isPresent()) {
             return interestOpt.get();
@@ -25,12 +25,29 @@ public class InterestRateService {
         }
     }
 
-    public List<InterestRate> obtainAllInterestRates() {
+    public InterestRate getInterestByName(String name) {
+        Optional<InterestRate> interestOpt = this.interestRateRepository.findByName(name);
+        if (interestOpt.isPresent()) {
+            return interestOpt.get();
+        } else {
+            throw new RuntimeException("No existe el interes con nombre:" + name);
+        }
+    }
+
+    public InterestRate saveOrUpdateInterestRate(InterestRate interestRate) {
+        return this.interestRateRepository.save(interestRate);
+    }
+
+    public List<InterestRate> getAllInterestRates() {
         return this.interestRateRepository.findAll();
     }
 
-    public List<InterestRate> obtainInterestByType(String type) {
+    public List<InterestRate> getInterestByType(String type) {
         return this.interestRateRepository.findByType(type);
+    }
+
+    public void deleteInterestRate(String code) {
+        this.interestRateRepository.deleteById(code);
     }
 
 }
