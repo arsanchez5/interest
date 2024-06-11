@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.banquito.core.interest.controller.dto.InterestRateDTO;
 import com.banquito.core.interest.model.InterestRate;
 import com.banquito.core.interest.service.InterestRateService;
 
@@ -53,20 +55,16 @@ public class InterestRateController {
     }
 
     @PostMapping
-    public ResponseEntity<InterestRate> createInterestRate(@RequestBody InterestRate interestRate) {
-        return ResponseEntity.ok(this.service.saveOrUpdateInterestRate(interestRate));
+    public ResponseEntity<InterestRateDTO> create(@RequestBody InterestRateDTO interestRateDTO) {
+        this.service.createInterestRate(interestRateDTO);
+        return ResponseEntity.ok(interestRateDTO);
     }
 
-    @PostMapping("/{code}")
-    public ResponseEntity<InterestRate> updateInterestRate(@PathVariable String code,
-            @RequestBody InterestRate interestRate) {
+    @PutMapping("/{code}")
+    public ResponseEntity<InterestRateDTO> updateInterestRate(@PathVariable String code, @RequestBody InterestRateDTO interestRateDTO) {
         try {
-            InterestRate interest = this.service.getInterestById(code);
-            interest.setName(interestRate.getName());
-            interest.setType(interestRate.getType());
-            interest.setDaysInMonth(interestRate.getDaysInMonth());
-            interest.setDaysInYear(interestRate.getDaysInYear());
-            return ResponseEntity.ok(this.service.saveOrUpdateInterestRate(interest));
+            this.service.updateInterestRate(code, interestRateDTO);
+            return ResponseEntity.ok(interestRateDTO);
         } catch (RuntimeException rte) {
             return ResponseEntity.notFound().build();
         }

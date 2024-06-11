@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.banquito.core.interest.controller.dto.InterestRateDTO;
 import com.banquito.core.interest.model.InterestRate;
 import com.banquito.core.interest.repository.InterestRateRepository;
 
@@ -34,8 +35,28 @@ public class InterestRateService {
         }
     }
 
-    public InterestRate saveOrUpdateInterestRate(InterestRate interestRate) {
+    public InterestRate createInterestRate(InterestRateDTO interestRateDTO) {
+        InterestRate interestRate = new InterestRate();
+        interestRate.setCode(interestRateDTO.getCode());
+        interestRate.setName(interestRateDTO.getName());
+        interestRate.setType(interestRateDTO.getType());
+        interestRate.setDaysInMonth(interestRateDTO.getDaysInMonth());
+        interestRate.setDaysInYear(interestRateDTO.getDaysInYear());
         return this.interestRateRepository.save(interestRate);
+    }
+
+    public InterestRate updateInterestRate(String code, InterestRateDTO interestRateDTO) {
+        Optional<InterestRate> interestOpt = this.interestRateRepository.findById(code);
+        if (!interestOpt.isPresent()) {
+            throw new RuntimeException("No existe el interes con id: " + code);
+        }
+        InterestRate existingInterest = interestOpt.get();
+        existingInterest.setName(interestRateDTO.getName());
+        existingInterest.setType(interestRateDTO.getType());
+        existingInterest.setDaysInMonth(interestRateDTO.getDaysInMonth());
+        existingInterest.setDaysInYear(interestRateDTO.getDaysInYear());
+        
+        return this.interestRateRepository.save(existingInterest);
     }
 
     public List<InterestRate> getAllInterestRates() {

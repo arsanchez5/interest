@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.banquito.core.interest.controller.dto.InterestRateLogDTO;
 import com.banquito.core.interest.model.InterestRateLog;
 import com.banquito.core.interest.service.InterestRateLogService;
 
@@ -58,8 +59,9 @@ public class InterestRateLogController {
     }
 
     @PostMapping
-    public ResponseEntity<InterestRateLog> createInterestRateLog(@RequestBody InterestRateLog interestRateLog) {
-        return ResponseEntity.ok(this.service.saveOrUpdateInterestRateLog(interestRateLog));
+    public ResponseEntity<InterestRateLogDTO> create(@RequestBody InterestRateLogDTO dto) {
+        this.service.createInterestRateLog(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
@@ -69,15 +71,11 @@ public class InterestRateLogController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InterestRateLog> updateInterestRateLog(@PathVariable Integer id,
-            @RequestBody InterestRateLog interestRateLog) {
+    public ResponseEntity<InterestRateLogDTO> updateInterestRateLog(@PathVariable Integer id,
+            @RequestBody InterestRateLogDTO dto) {
         try {
-            InterestRateLog interestLog = this.service.getInterestLogById(id);
-            interestLog.setValue(interestLog.getValue());
-            interestLog.setStartDate(interestLog.getStartDate());
-            interestLog.setEndDate(interestLog.getEndDate());
-            interestLog.setState(interestLog.getState());
-            return ResponseEntity.ok(this.service.saveOrUpdateInterestRateLog(interestLog));
+            this.service.updateInterestRateLog(id, dto);
+            return ResponseEntity.ok(dto);
         } catch (RuntimeException rte) {
             return ResponseEntity.notFound().build();
         }
