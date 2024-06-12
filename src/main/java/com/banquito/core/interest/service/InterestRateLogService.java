@@ -48,24 +48,6 @@ public class InterestRateLogService {
         return interestRateLogRepository.save(interestRateLog);
     }
 
-    public InterestRateLog updateInterestRateLog(Integer id, InterestRateLogDTO interestRateLogDTO){
-        Optional<InterestRateLog> interestLogOpt = this.interestRateLogRepository.findById(id);
-        if (!interestLogOpt.isPresent()) {
-            throw new RuntimeException("No existe el interes con id: " + id);
-        }
-        InterestRateLog existingInterest = interestLogOpt.get();
-        existingInterest.setCodeInterestRate(interestRateLogDTO.getCodeInterestRate());
-        existingInterest.setValue(interestRateLogDTO.getValue());
-        existingInterest.setStartDate(interestRateLogDTO.getStartDate());
-        existingInterest.setEndDate(interestRateLogDTO.getEndDate());
-        existingInterest.setState(interestRateLogDTO.getState());
-        return this.interestRateLogRepository.save(existingInterest);
-    }
-
-    public void deleteInterestRateLog(Integer id) {
-        interestRateLogRepository.deleteById(id);
-    }
-
     public List<InterestRateLog> getInterestRateLogsByDateRange(Date startDate, Date endDate) {
         return interestRateLogRepository.findByStartDateBetween(startDate, endDate);
     }

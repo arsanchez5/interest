@@ -4,11 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,20 +62,4 @@ public class InterestRateLogController {
         return ResponseEntity.ok(dto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInterestRateLog(@PathVariable Integer id) {
-        this.service.deleteInterestRateLog(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<InterestRateLogDTO> updateInterestRateLog(@PathVariable Integer id,
-            @RequestBody InterestRateLogDTO dto) {
-        try {
-            this.service.updateInterestRateLog(id, dto);
-            return ResponseEntity.ok(dto);
-        } catch (RuntimeException rte) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
