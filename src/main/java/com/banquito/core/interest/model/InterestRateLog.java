@@ -2,7 +2,7 @@ package com.banquito.core.interest.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,10 +38,10 @@ public class InterestRateLog implements Serializable {
     private BigDecimal value;
     @Temporal(TemporalType.DATE)
     @Column(name = "START_DATE", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
     @Temporal(TemporalType.DATE)
     @Column(name = "END_DATE")
-    private Date endDate;
+    private LocalDate endDate;
     @Column(name = "STATE", length = 3, nullable = false)
     private String state;
 

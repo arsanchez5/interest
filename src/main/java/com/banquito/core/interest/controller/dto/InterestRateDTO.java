@@ -1,14 +1,15 @@
 package com.banquito.core.interest.controller.dto;
 
-import java.math.BigDecimal;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 
-@Data
+@Value
+@Builder
 public class InterestRateDTO {
     private String code;
     private String name;
     private String type;
-    private BigDecimal daysInMonth;
-    private BigDecimal daysInYear;
+    private Integer daysInMonth;
+    private Integer daysInYear;
 }

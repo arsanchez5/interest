@@ -15,4 +15,6 @@ public interface InterestRateRepository extends JpaRepository<InterestRate, Stri
 
     Optional<InterestRate> findByName(String name);
 
+    List<InterestRate> findByDaysInMonthAndDaysInYear(Integer daysInMount, Integer daysInYear);
+
 }

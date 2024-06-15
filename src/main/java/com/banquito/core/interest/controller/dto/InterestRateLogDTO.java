@@ -1,15 +1,17 @@
 package com.banquito.core.interest.controller.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
-import lombok.Data;
-@Data
+import lombok.Builder;
+import lombok.Value;
+@Value
+@Builder
 public class InterestRateLogDTO {
     private Integer id;
     private String codeInterestRate;
     private BigDecimal value;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String state;
 }

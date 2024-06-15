@@ -9,15 +9,17 @@ import org.springframework.stereotype.Service;
 import com.banquito.core.interest.controller.dto.InterestRateLogDTO;
 import com.banquito.core.interest.model.InterestRateLog;
 import com.banquito.core.interest.repository.InterestRateLogRepository;
+import com.banquito.core.interest.util.mapper.InterestRateLogMapper;
 
 @Service
 public class InterestRateLogService {
     private final InterestRateLogRepository interestRateLogRepository;
-
+    private final InterestRateLogMapper interestRateLogMapper;
     
-
-    public InterestRateLogService(InterestRateLogRepository interestRateLogRepository) {
+    public InterestRateLogService(InterestRateLogRepository interestRateLogRepository,
+            InterestRateLogMapper interestRateLogMapper) {
         this.interestRateLogRepository = interestRateLogRepository;
+        this.interestRateLogMapper = interestRateLogMapper;
     }
 
     public InterestRateLog getInterestLogById(Integer id) {
@@ -38,14 +40,10 @@ public class InterestRateLogService {
         return this.interestRateLogRepository.findByCodeInterestRate(codeInterestRate);
     }
 
-    public InterestRateLog createInterestRateLog(InterestRateLogDTO interestRateLogDTO) {
-        InterestRateLog interestRateLog = new InterestRateLog();
-        interestRateLog.setCodeInterestRate(interestRateLogDTO.getCodeInterestRate());
-        interestRateLog.setValue(interestRateLogDTO.getValue());
-        interestRateLog.setStartDate(interestRateLogDTO.getStartDate());
-        interestRateLog.setEndDate(interestRateLogDTO.getEndDate());
-        interestRateLog.setState(interestRateLogDTO.getState());
-        return interestRateLogRepository.save(interestRateLog);
+    public InterestRateLogDTO createInterestRateLog(InterestRateLogDTO interestRateLogDTO) {
+        InterestRateLog interestRateLog = this.interestRateLogMapper.toPersistence(interestRateLogDTO);
+        InterestRateLog savedInterestRateLog = this.interestRateLogRepository.save(interestRateLog);
+        return this.interestRateLogMapper.toDTO(savedInterestRateLog);
     }
 
     public List<InterestRateLog> getInterestRateLogsByDateRange(Date startDate, Date endDate) {

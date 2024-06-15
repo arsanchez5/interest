@@ -7,7 +7,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.Getter;
@@ -31,9 +30,9 @@ public class InterestRate implements Serializable {
     @Column(name = "TYPE", length = 3, nullable = false)
     private String type;
     @Column(name = "DAYS_IN_MONTH", precision = 2, nullable = false)
-    private BigDecimal daysInMonth;
+    private Integer daysInMonth;
     @Column(name = "DAYS_IN_YEAR", precision = 3, nullable = false)
-    private BigDecimal daysInYear;
+    private Integer daysInYear;
 
     @OneToMany(mappedBy = "interestRate")
     private List<InterestRateLog> interestRateLogs;
